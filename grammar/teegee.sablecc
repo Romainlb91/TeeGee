@@ -1,0 +1,129 @@
+/* This file is part of TeeGee.
+ *
+ * See the NOTICE file distributed with this work for copyright information.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+Language teegee;
+
+Lexer
+  num = ('0'..'9')+;
+
+  backslash = #92;
+  sharp = #35;
+  ampersand = #38;
+  star = #42;
+  circumflex = #94;
+  pipe = #124;
+  space = #32;
+  tab = #9;
+
+  cr = #13;
+  lf = #10;
+  eol = cr | lf | cr lf;
+
+  char = Any - (sharp | ampersand | star | eol | num | circumflex | pipe);
+
+Parser
+  file =
+    markers;
+
+  markers =
+    {more:} markers marker |
+    {zero:} ;
+
+  marker =
+    {title:} sharp [num:] num sharp string eol |
+    {array:} sharp 'array' eol array sharp |
+    {paragraph:} ampersand ampersand_strings ampersand eol |
+    {string:} string_or_link eol |
+    {eol:} eol |
+    {title_with_bulleted_list:} bulleted_list sharp [num:] num sharp string_or_link eol |
+    {paragraph_with_bulleted_list:} bulleted_list ampersand ampersand_strings ampersand eol |
+    {string_with_bulleted_list:} bulleted_list string_or_link eol |
+    {array_with_bulleted_list:} bulleted_list sharp 'array' eol array sharp |
+    {eol_with_bulleted_list:} bulleted_list eol |
+    {title_with_number_list:} number_list sharp [num:] num sharp string_or_link eol |
+    {paragraph_with_number_list:} number_list ampersand ampersand_strings ampersand eol |
+    {string_with_number_list:} number_list string_or_link eol |
+    {array_with_number_list:} number_list sharp 'array' eol array sharp |
+    {eol_with_number_list:} number_list eol ;
+
+  bulleted_list = bulleted_list_items;
+
+  bulleted_list_items =
+    {more:} bulleted_list_items bulleted_list_item |
+    {one:} bulleted_list_item;
+
+  bulleted_list_item = star string eol;
+
+  number_list = number_list_items;
+
+  number_list_items =
+    {more:} number_list_items number_list_item |
+    {one:} number_list_item;
+
+  number_list_item = star star string eol;
+
+  string_or_link =
+    {string:} string|
+    {link:} [l_bracket:]'<'string'>'[l_parenthese:]'['ampersand_strings']';
+
+  string =
+     {string:} string_chars string_char;
+
+  string_chars =
+    {more:} string_chars string_char |
+    {zero:} ;
+
+  string_char =
+    {char:} char |
+    {num:} num |
+    {sharp:} backslash sharp |
+    {ampersand:} backslash ampersand |
+    {star:} backslash star |
+    {circumflex:} backslash circumflex |
+    {pipe:} backslash pipe |
+    {backslash:} backslash backslash ;
+
+  ampersand_strings = ampersand_chars ampersand_char;
+
+  ampersand_chars =
+    {more:} ampersand_chars ampersand_char |
+    {zero:} ;
+
+  ampersand_char =
+    {char:} char |
+    {num:} num |
+    {eol:} eol |
+    {sharp:} backslash sharp |
+    {ampersand:} backslash ampersand |
+    {star:} backslash star |
+    {circumflex:} backslash circumflex |
+    {pipe:} backslash pipe |
+    {backslash:} backslash backslash ;
+
+  array = array_rows column_char;
+
+  array_rows =
+    {more:} array_rows column_char|
+    {zero:} ;
+
+  column_char =
+    {char:} char |
+    {num:} num |
+    {eol:} eol |
+    {pipe:} pipe eol |
+    {ampersand:} ampersand;
+

@@ -1,0 +1,24 @@
+TeeGee is a text generator that will generate through a particular simplified
+syntax, HTML. 
+
+This generator use ObjectMacro2
+
+The lexer and parser are built using sablecc-4-beta.2.
+
+HOW TO COMPILE
+==============
+
+In order to compile TeeGee, you must first compile the grammar files and the 
+ObjectMacro files.
+
+```java -jar path-to-sablecc-4-beta.2/lib/sablecc.jar -d src -p mino grammar/mino.sablecc```
+
+```java -jar path-to-objectmacro.jar -d path-to-TeeGee/intermediate/ path-to-TeeGee/html.objectmacro```
+```java -jar path-to-objectmacro-back.jar -d path-to-TeeGee/src/ -p teegee.macro path-to-html.intermediate 
+
+Once this is done, you can compile the java files and give the folder you
+want to generate, in the src/ directory, as you would normally.
+
+On Windows, replace all the "/" above by "\".
+
+Have fun!

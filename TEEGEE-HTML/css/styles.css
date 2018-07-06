@@ -1,0 +1,186 @@
+/*MAIN*/
+body { 
+	color: black;
+	font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif;
+	font-size: 18px;
+	line-height: 1.4em; 
+	background-color: #d6d6ce;
+}
+
+.header a {
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.header a:hover {
+
+	color: #1E90FF;
+
+}
+
+.header {
+
+	background: #000000;
+	width: 100%;
+	height: 76px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+
+}
+
+#site_title {
+	display: block; 
+    margin-top : 15px;
+    margin-left: 1%;
+	float: left;
+	color: #fff; 
+	font-size: 38px; 
+	font-weight: 700; 
+	line-height: 40px; 
+
+
+}
+
+.nav {
+
+	float: right;
+	padding: 20px;	
+	
+}
+
+#menu-icon {
+
+	display: hidden;
+	width: 48px;
+	height: 48px;
+	background: url(../images/menu-icon.png) no-repeat;
+
+}
+
+a:hover#menu-icon {
+
+	background-color: #1E90FF;
+	border-radius: 4px 4px 0 0;
+
+}
+
+.nav ul {
+    text-align: center;
+    overflow: hidden;
+	list-style: none;
+}
+
+.nav li {
+    display: inline-block;
+    float:left;
+    padding-left : 20px;
+    padding-right : 20px;
+    width: auto;
+    text-align: center;
+}
+
+.nav li.dropdown {
+        display: inline-block;
+}
+
+.dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 9.45%;
+        background-color: #f9f9f9;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+}
+
+.dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+}
+.dropdown:hover .dropdown-content {
+        display: block;
+}
+.section {
+
+	margin: 80px auto 40px;
+	max-width: 1500px;
+	position: relative;
+	padding: 20px
+
+}
+
+.section .paragraph {
+    border-left: 6px solid black;
+	padding-left : 20px;
+    background-color: #ededea ;
+}
+
+.section table {
+	border-collapse: collapse;
+
+}
+
+.section table, th, td {
+    border: 2px solid black;
+	padding:5px;
+}
+
+/*MEDIA QUERY*/
+@media only screen and (max-width : 640px) {
+
+	.header {
+
+		position: absolute;
+
+	}
+
+	#menu-icon {
+
+		display:inline-block;
+
+	}
+
+	.nav ul, .nav:active ul { 
+
+		display: none;
+		position: absolute;
+		padding: 20px;
+		background: #000;
+		border: 3px solid #fff;
+		right: 20px;
+		top: 60px;
+		width: 50%;
+		border-radius: 4px 0 4px 4px;
+
+	}
+
+	.nav li {
+
+		text-align: center;
+		width: 100%;
+		padding: 10px 0;
+		margin: 0;
+
+	}
+
+	.nav:hover ul {
+
+		display: block;
+
+	}
+
+    .dropdown-content {
+        min-width: 50%;
+    }
+    .dropdown-content:focus:hover:active {
+        display: block;
+    }
+
+    .dropdown {float: none;}
+    .dropdown-content {position: relative;}
+}
